@@ -3,31 +3,32 @@
 
 int main(void)
 {
-    int array[] = {7, 2, 5, 4, 1, 6, 0 ,3};
-    int sorted_array[8];
+    int array[] = {2, 1, 0};
     int smallest_number = 0;
-    int idx = 0;
+    int smallest_index = 0;
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 3; i++)
     {
         smallest_number = array[i];
+        int smallest_index = i;
         
-        for (int j = i+1; j < 8; j++)
+        for (int j = i+1; j < 3; j++)
         {
             if (smallest_number > array[j])
             {
                 smallest_number = array[j];
-                idx = j;
+                smallest_index = j;
             }
         }
 
-        sorted_array[i] = smallest_number;
-        array[idx] = array[i];
+        int temp = array[i];
+        array[i] = smallest_number;
+        array[smallest_index] = temp;
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 3; i++)
     {
-        printf("%i, ", sorted_array[i]);
+        printf("%i, ", array[i]);
     }
     printf("\n");
 }
