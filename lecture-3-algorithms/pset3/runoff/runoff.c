@@ -144,14 +144,14 @@ void tabulate(void)
     for (int i = 0; i < voter_count; i++)
     {
          int rank = 0;
-         int candidate_index = preferences[i][rank];
+        //  int candidate_index = preferences[i][rank];
 
-        while (candidates[candidate_index].eliminated)
+        while (candidates[preferences[i][rank]].eliminated)
         {
             rank++;
         }
 
-        candidates[candidate_index].votes++;
+        candidates[preferences[i][rank]].votes++;
     }
     return;
 }
@@ -159,12 +159,12 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    int half_of_vote_count = voter_count/2;
+    int half_of_vote_count = voter_count/2 + 1;
     for (int i = 0; i < candidate_count; i++)
     {
         if (candidates[i].votes >= half_of_vote_count)
         {
-            printf("Winner: %s", candidates[i].name);
+            printf("Winner: %s\n", candidates[i].name);
             return true;
         }
     }
@@ -174,10 +174,10 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    int least_votes = 0;
+    int least_votes = candidates[0].votes;
     for (int i = 0; i < candidate_count; i++)
     {
-        if (least_votes > candidates[i].votes)
+        if (least_votes > candidates[i].votes && !candidates[i].eliminated)
         {
             least_votes = candidates[i].votes;
         }
@@ -190,7 +190,7 @@ bool is_tie(int min)
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[0].votes != candidates[i].votes)
+        if (min != candidates[i].votes && !candidates[i].eliminated)
         {
             return false;
         }
